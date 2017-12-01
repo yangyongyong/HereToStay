@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ManagerQnA">
+
+<select id="qnaList" parameterType = "hts.model.vo.manager.QnA" resultType="hts.model.vo.manager.QnA">
+   SELECT 
+        a.*
+    FROM (
+        SELECT ROWNUM rnum, s.*
+        FROM (
+            select * from QNA
+        )s
+    )a 
+WHERE rnum BETWEEN #{startRowNo} AND #{endRowNo}  
+</select>
+
+<select id="ownerQnA" parameterType = "hts.model.vo.manager.QnA" resultType="hts.model.vo.manager.QnA">
+  SELECT 
+        a.*
+    FROM (
+        SELECT ROWNUM rnum, s.*
+        FROM (
+            select * from QNA where USER_ID IN(select OWN_ID from OWNER)
+        )s
+    )a 
+WHERE rnum BETWEEN #{startRowNo} AND #{endRowNo}
+
+</select>
+
+<select id="memberQnA" parameterType = "hts.model.vo.manager.QnA" resultType="hts.model.vo.manager.QnA">
+SELECT 
+        a.*
+    FROM (
+        SELECT ROWNUM rnum, s.*
+        FROM (
+            select * from QNA where USER_ID IN(select MEM_ID from MEMBER)
+        )s
+    )a 
+WHERE rnum BETWEEN #{startRowNo} AND #{endRowNo}
+
+</select>
+
+
+<select id="qnaCount" resultType="int">
+    SELECT COUNT(*) totalCount  FROM QNA
+</select>
+
+<select id="ownCount" resultType="int">
+    SELECT COUNT(*) totalCount  from QNA where USER_ID IN(select OWN_ID from OWNER)
+</select>
+
+<select id="memCount" resultType="int">
+    SELECT COUNT(*) totalCount  FROM QNA where USER_ID IN(select MEM_ID from MEMBER)
+</select>
+</mapper>

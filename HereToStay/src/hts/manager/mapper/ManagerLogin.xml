@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ManagerLogin">
+
+ <select id="loginCheck" resultType="integer" parameterType="hts.model.vo.manager.Manager">
+      select count(*) 
+      from manager 
+      where mgr_id=#{mgrId} and mgr_pwd=#{mgrPwd}
+   </select>
+   <!-- Select -->
+   <select id="totalAccount" resultType="integer">
+      SELECT count(*) FROM manager
+   </select>
+
+
+</mapper>

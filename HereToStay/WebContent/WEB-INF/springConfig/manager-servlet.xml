@@ -12,21 +12,37 @@
 
 <!-- @Controller, @Repository, @Service ... -->
 <context:component-scan base-package="hts.manager"/>
+<context:component-scan base-package="hts.model.vo.manager"/>
 
 
 <!-- JNDI 설정 -->
-<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+<bean id="dataSource2" class="org.springframework.jndi.JndiObjectFactoryBean">
 	<property name="jndiName" value="java:comp/env/jdbc/myora"></property>
 </bean>
 
 <!-- String mybatis 설정 -->
-<bean id="factoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
-	<property name="dataSource" ref="dataSource"></property>
+<bean id="factoryBean2" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<property name="dataSource" ref="dataSource2"></property>
+	<property name="configLocation" value="classpath:hts/common/mybatis/configMybatis.xml"></property>
 	<property name="mapperLocations" value="classpath*:hts/manager/mapper/*.xml"></property>
 </bean>
 
-<bean id="ss" class="org.mybatis.spring.SqlSessionTemplate">
-	<constructor-arg ref="factoryBean"></constructor-arg>
+<bean id="ss2" class="org.mybatis.spring.SqlSessionTemplate">
+	<constructor-arg ref="factoryBean2"></constructor-arg>
 </bean>
+
+
+<!-- Ajax의 한글깨짐 처리를 위한 소스 -->
+<mvc:annotation-driven>
+	<mvc:message-converters>
+		<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+			<property name="supportedMediaTypes">
+				<list>
+					<value>text/html;charset=UTF-8</value>
+				</list>
+			</property>
+		</bean>
+	</mvc:message-converters>
+</mvc:annotation-driven>
 
 </beans>

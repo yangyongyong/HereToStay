@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ownerPension">
+
+<select id="pensionInsert" parameterType="hts.model.vo.owner.Pension">
+INSERT INTO pension(PEN_ID,PEN_NAME,PEN_ADDR,PEN_ADDR2,PEN_OPT,PEN_INTRO,PEN_NOTI,PEN_SHOT,PEN_EHOT,OWN_ID,PEN_DATE,PEN_A1,PEN_A2)
+values ('PEN'||seq_pension_id.nextval,#{penName},'',#{penAddr2},#{penOpt},#{penIntro},#{penNoti},#{penShot},#{penEhot},#{ownId},SYSDATE,#{penA1},#{penA2})
+</select>
+
+<select id="pensionFind" parameterType="String" resultType="String">
+select pen_id from pension where own_id=#{value}
+</select>
+
+<select id="pensionList" parameterType="hts.model.vo.owner.Pension" resultType="hts.model.vo.owner.Pension">
+select * from pension where own_id=#{ownId}
+</select>
+
+<select id="pensionUpdate" parameterType="hts.model.vo.owner.Pension">
+UPDATE pension 
+SET PEN_NAME = #{penName},
+PEN_ADDR = '',
+PEN_ADDR2 = #{penAddr2},
+PEN_OPT = #{penOpt},
+PEN_INTRO = #{penIntro},
+PEN_NOTI = #{penNoti},
+PEN_SHOT = #{penShot},
+PEN_EHOT = #{penEhot},
+OWN_ID = #{ownId},
+PEN_DATE = SYSDATE,
+PEN_A1 = #{penA1},
+PEN_A2 = #{penA2} 
+WHERE own_id=#{ownId}
+</select>
+
+</mapper>

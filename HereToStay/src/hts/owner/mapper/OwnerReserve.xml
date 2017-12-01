@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ownerReserve">
+<!-- 1. 예약리스트 목록 보기  #{penId}-->
+	<select id="resView" resultType="hts.model.vo.owner.Reservation">
+		select res.res_id,rm.rom_name,pen.pen_name,res.res_tot,TO_CHAR(res.res_outdate,'MM') res_outdate
+		from reservation res, room rm, pension pen 
+		where res.rom_id = rm.rom_id and rm.pen_id = pen.pen_id and rm.pen_id='PEN1000020'
+		order by res_outdate
+	</select> 
+	
+	<!-- 2. 전체 이용건수 , 총매출-->	
+	<select id="resCount" resultType="hts.model.vo.owner.Reservation">
+		SELECT count(mem_id) res_number,sum(res_tot) res_tot
+		FROM reservation
+	</select>
+	
+	<!-- 3. 월별 이용률 -->
+	<select id="resRate" resultType="hts.model.vo.owner.Reservation">
+		SELECT TO_CHAR(res_outdate,'MM') res_outdate,ROUND(((count(mem_id)) / (select count(mem_id)from reservation))*100) res_number
+		FROM reservation
+		GROUP BY TO_CHAR(res_outdate,'MM')
+		ORDER BY res_outdate
+	</select>
+	
+</mapper>

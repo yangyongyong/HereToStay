@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ManagerPension">
+
+
+<!-- START OF 펜션리스트 출력 -->
+<select id="pensionList" resultType="hts.model.vo.manager.Pension">
+<!--  SELECT  pen_id, pen_name, pen_addr2, pen_date FROM pension -->
+ SELECT  pen_id, pen_name, pen_addr2,pen_status, TO_CHAR(pen_date,'YYYY-MM-DD') pen_date FROM pension where  not pen_status= 'O'  order by pen_status,pen_addr2 asc
+
+ 
+</select>
+<!-- END OF 펜션리스트 출력 -->
+
+
+<!-- START OF 펜션리스트 더보기(페이징처리까지) 출력 -->
+
+<select id="pensionPaging" resultType="hts.model.vo.manager.Pension">
+
+    SELECT 
+        a.*
+    FROM (
+        SELECT ROWNUM rnum, s.*
+        FROM (
+            SELECT  pen_id, pen_name, pen_addr2,pen_status, TO_CHAR(pen_date,'YYYY-MM-DD') pen_date FROM pension where  not pen_status= 'O'  order by pen_status,pen_addr2 asc
+        )s
+    )a 
+WHERE rnum BETWEEN #{startRowNo} AND #{endRowNo}
+
+</select>
+<!-- END OF 펜션리스트 더보기(페이징처리까지) 출력 -->
+
+
+
+<!-- START OF 펜션리스트 더보기(페이징처리까지) 출력 -->
+<select id="pensionTC"  resultType="int">
+SELECT count(*) totalCount from pension where  not pen_status= 'O'  order by pen_status desc
+</select>
+<!-- START OF 펜션리스트 더보기(페이징처리까지) 출력 -->
+
+
+<!-- START OF 펜션리스트 상세보기 출력 -->
+<select id="pensionDetail" parameterType="String" resultType="hts.model.vo.manager.PensionDetail">
+SELECT p.pen_name as pen_name, p.pen_addr2 as pen_addr2 ,  TO_CHAR(pen_shot,'YYYY-MM-DD') as pen_shot , 
+ TO_CHAR(pen_ehot,'YYYY-MM-DD') as pen_ehot, p.pen_opt as pen_otp, p.pen_intro as pen_intro, p.pen_noti as pen_noti, 
+o.own_id as own_id ,o.own_name as own_name ,o.own_mail as own_mail ,o.own_tel as own_tel ,o.own_bank as own_bank ,o.own_acc as own_acc,
+r.rom_name as rom_name ,r.rom_type as rom_type ,r.rom_people as rom_people ,r.rom_intro as rom_intro ,r.rom_cost as rom_cost,r.rom_opt as rom_opt
+FROM pension p, owner o, room r
+WHERE p.own_id=o.own_id and p.pen_id=r.pen_id and p.pen_id=#{value}
+</select>
+<!-- END OF 펜션리스트 상세보기 출력 -->
+
+
+<!-- START OF 펜션허가  -->
+<update id="pensionLocalUpdate" parameterType="HashMap">
+
+UPDATE pension
+SET pen_addr = #{penAddr},pen_status = 'Y'
+WHERE pen_id=#{penId}
+
+</update>
+<!-- END OF 펜션허가 -->
+
+<!-- START OF 펜션거절  -->
+<update id="pensionRefuse" parameterType="hts.model.vo.manager.Pension" >
+
+UPDATE pension
+SET pen_status = 'O'
+WHERE pen_id=#{penId}
+
+</update>
+<!-- END OF 펜션거절  -->
+
+
+
+
+<select id="countDay" resultType="hts.model.vo.manager.Pension">
+
+select count(pen_status) as pen_day
+from pension 
+where to_char(pen_date,'DD') =  to_char(sysdate,'DD')
+
+</select>
+ 
+<select id="countMonth" resultType="hts.model.vo.manager.Pension">
+
+select count(pen_status) as pen_month
+from pension 
+where to_char(pen_date,'MM') =  to_char(sysdate,'MM') and not pen_status= 'O'
+
+</select>
+ 
+ <select id="countOk" resultType="hts.model.vo.manager.Pension">
+
+select count(pen_status) as pen_ok from pension where pen_status = 'Y'
+
+</select>
+ 
+</mapper> 

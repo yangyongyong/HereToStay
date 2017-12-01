@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ManagerStorage">
+<!-- 1. 모든 게시물 목록 보기 -->
+<select id="storageList" resultType="hts.model.vo.manager.StorageDetail">
+select p.pen_id, p.pen_name, p.pen_addr,p.pen_addr2, s.sto_bath, s.sto_tnc from pension p, storage s where p.pen_id = s.pen_id ORDER BY s.sto_bath + s.sto_tnc 
+</select>
+<select id="stoPaging" resultType="hts.model.vo.manager.StorageDetail">
+
+    SELECT 
+        a.*
+    FROM (
+        SELECT ROWNUM rnum, s.*
+        FROM (
+           select p.pen_id, p.pen_name, p.pen_addr,p.pen_addr2, s.sto_bath, s.sto_tnc from pension p, storage s where p.pen_id = s.pen_id ORDER BY s.sto_bath + s.sto_tnc 
+        )s
+    )a 
+WHERE rnum BETWEEN #{startRowNo} AND #{endRowNo}
+
+</select>
+
+<select id="storageTC"  resultType="int">
+SELECT count(*) totalCount from pension p, storage s  where p.pen_id = s.pen_id
+
+</select>
+
+<update id="storageUpdate" parameterType="hts.model.vo.manager.Strorage">
+update storage set STO_BATH = STO_BATH+(20-STO_BATH),STO_TNC = STO_TNC+(20-STO_TNC) where pen_id='${penId}'
+</update>
+
+<update id="bathUpdate" parameterType="hts.model.vo.manager.Strorage">
+update storage set STO_BATH = STO_BATH+#{stoBath} where pen_id='${penId}'
+</update>
+
+<update id="tncUpdate" parameterType="hts.model.vo.manager.Strorage">
+update storage set STO_TNC = STO_TNC+#{stoTnc} where pen_id='${penId}'
+</update>
+
+<select id="stoSearch" resultType="hts.model.vo.manager.StorageDetail" >
+    SELECT 
+        a.*
+    FROM (
+        SELECT ROWNUM rnum, s.*
+        FROM (
+           select p.pen_id, p.pen_name, p.pen_addr,p.pen_addr2, s.sto_bath, s.sto_tnc from pension p, storage s where p.pen_id = s.pen_id and p.pen_name like '%'||#{penName}||'%'
+        )s
+    )a 
+WHERE rnum BETWEEN #{startRowNo} AND #{endRowNo}
+
+</select>
+</mapper>

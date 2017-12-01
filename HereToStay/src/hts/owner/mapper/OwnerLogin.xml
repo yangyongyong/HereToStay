@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ownerLogin">
+	<insert id="OwnerRegister" parameterType="hts.model.vo.owner.Owner">
+		INSERT INTO owner VALUES(#{ownId},#{ownName},#{ownPwd},#{ownMail},#{ownTel},#{ownBank},#{ownAcc},#{ownLic})	
+	</insert>
+	
+	<!-- 로그인 체크쿼리 -->
+	<select id="loginCheck" resultType="integer" parameterType="hts.model.vo.owner.Owner">
+		select count(*) 
+		from owner 
+		where own_id=#{ownId} and own_pwd=#{ownPwd}
+	</select>
+	<!-- Select -->
+	<select id="totalAccount" resultType="integer">
+		SELECT count(*) FROM owner
+	</select>
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ownerRoom">
+
+<select id="roomInsert" parameterType="hts.model.vo.owner.Room">
+insert into room(ROM_ID, PEN_ID, ROM_NAME, ROM_TYPE, ROM_PEOPLE, ROM_INTRO, ROM_OPT, ROM_COST)
+values(#{romId},#{penId},#{romName},#{romType},#{romPeople},#{romIntro},#{romOpt},#{romCost})
+</select>
+
+<select id="roomList" parameterType="HashMap" resultType="hts.model.vo.owner.Room">
+select * from (select rownum rnum, r.* from room r where pen_id=#{dbPenId}) a where a.rnum=#{mode}
+</select>
+
+<select id="roomTagList" parameterType="String" resultType="hts.model.vo.owner.Room">
+select * from room where pen_id=#{value}
+</select>
+
+<select id="roomVal" resultType="String">
+select seq_rom_id.nextval from dual
+</select>
+
+<select id="roomUpdate" parameterType="hts.model.vo.owner.Room">
+update room 
+set ROM_NAME=#{romName}, ROM_TYPE=#{romType}, ROM_PEOPLE=#{romPeople}, 
+ROM_INTRO=#{romIntro}, ROM_OPT=#{romOpt}, ROM_COST=#{romCost}
+where ROM_ID=#{romId}
+</select>
+
+<select id="roomdelete" parameterType="String">
+delete from room
+where rom_id=#{value}
+</select>
+
+
+
+</mapper>
