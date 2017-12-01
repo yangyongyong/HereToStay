@@ -44,7 +44,7 @@
 					<input type="text" id="logId" placeholder="ID">
 					<input type="password" id="logPwd" placeholder="PASSWORD">
 					<footer class="autorize-bottom">
-						<button class="authorize-btn" id="memLogin">로그인</button>
+						<input class="authorize-btn" type="button" value="로그인" id="memLogin"></button>
 						<div class="clear"></div>
 					</footer>
 				</div>

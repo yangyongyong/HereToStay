@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,22 +61,22 @@
 								</div>
 								<div class="booking-form-i">
 									<label>이름:</label>
-									<div class="input"><input type="text" value="" readonly /></div>
+									<div class="input"><input type="text" value="${Member.memName}" readonly /></div>
+								</div>
+<!-- 								<div class="booking-form-i"> -->
+<!-- 									<label>Book:</label> -->
+<!-- 									<div class="input"><input type="text" value="" /></div> -->
+<!-- 								</div> -->
+<!-- 								<div class="booking-form-i"> -->
+<!-- 									<label>Confirm Email Adress:</label> -->
+<!-- 									<div class="input"><input type="text" value="" /></div> -->
+<!-- 								</div> -->
+								<div class="booking-form-i">
+									<label>휴대폰 번호:</label>
+									<div class="input"><input type="text" value="${Member.memTel}" readonly /></div>
 								</div>
 								<div class="booking-form-i">
-									<label>Email Adress:</label>
-									<div class="input"><input type="text" value="" /></div>
-								</div>
-								<div class="booking-form-i">
-									<label>Confirm Email Adress:</label>
-									<div class="input"><input type="text" value="" /></div>
-								</div>
-								<div class="booking-form-i">
-									<label>Country code:</label>
-									<div class="input"><input type="text" value="" /></div>
-								</div>
-								<div class="booking-form-i">
-									<label>Preferred Phone Number:</label>
+									<label>추가 전화번호:</label>
 									<div class="input"><input type="text" value="" /></div>
 								</div>
 								<div class="clear"></div>
@@ -186,11 +187,10 @@
 								</div>
 							</div>
 						<div class="booking-complete">
-								<h2>Review and book your trip</h2>
-								<p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui voluptatem sequi nesciunt. </p>	
+<!-- 								<h2>Review and book your trip</h2> -->
+<!-- 								<p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui voluptatem sequi nesciunt. </p>	 -->
 								<input type='button' id='reserve' class="booking-complete-btn" value ='예약 완료'/>
-							</div>
-							
+							</div>					
 						</div>
   					</div>
   				</div>
@@ -258,7 +258,9 @@
 						</div>
 						<div class="chk-line">
 							<span class="chk-l">${days} nights stay</span>
-							<span class="chk-r">${romCost *days} 원</span>
+							
+						<fmt:formatNumber var='nightCost' value="${romCost *days}" type="number"/>
+							<span class="chk-r">￦ ${nightCost} 원</span>
 							<div class="clear"></div>
 						</div>
 <!-- 						<div class="chk-line"> -->
@@ -269,7 +271,8 @@
 					</div>
 					<div class="chk-total">
 						<div class="chk-total-l">Total Price</div>
-						<div class="chk-total-r">${romCost *days} 원<input id='cost' type="hidden" value="${romCost *days}"/></div>
+						<fmt:formatNumber var='totalCo' value="${romCost *days}" type="number"/>
+						<div class="chk-total-r">￦ ${totalCo} 원<input id='cost' type="hidden" value="${romCost *days}"/></div>
 						<div class="clear"></div>
 					</div>					
 				</div>

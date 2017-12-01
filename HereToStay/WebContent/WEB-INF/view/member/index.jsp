@@ -43,16 +43,16 @@
 						</div>      
       				</div>
       				<div class="swiper-slide"> 
-						<div class="slide-section slide-b" style="background:url(/img/member/MyMain3.png) center top no-repeat;">
-							<div class="mp-slider-lbl">무인화 시스템으로 운영되는 펜션을 체험해보세요</div>
-							<div class="mp-slider-lbl-a">늦은 도착시간을 두려워 하지 마세요. 자기만의 비밀번호만 가지고 있다면, 도착 시간이 나의 Check In 시간이 됩니다 !</div>
+						<div class="slide-section slide-b" style="background:url(/img/member/MyMain4.jpg) center top no-repeat;">
+							<div class="mp-slider-lbl">도심에서 자연까지. 지역적 한계가 없는 '여기없대'</div>
+							<div class="mp-slider-lbl-a">전국 각지에 있는 펜션이 등록 되어있어  예약을 위해 여러 사이트를 찾을 필요가 없습니다. '여기없대' 에서 한번에 해결하세요 !</div>
 							<div class="mp-slider-btn"><a class="btn-a">Here To Stay</a></div>
 						</div>
       				</div>
       				<div class="swiper-slide"> 
-						<div class="slide-section slide-b" style="background:url(/img/member/MyMain2.png) center top no-repeat;">
-							<div class="mp-slider-lbl">도심에서 자연까지. 지역적 한계가 없는 '여기없대'</div>
-							<div class="mp-slider-lbl-a">전국 각지에 있는 펜션이 등록 되어있어  예약을 위해 여러 사이트를 찾을 필요가 없습니다. '여기없대' 에서 한번에 해결하세요 !</div>
+						<div class="slide-section slide-b" style="background:url(/img/member/MyMain7.jpg) center top no-repeat;">
+							<div class="mp-slider-lbl">무인화 시스템으로 운영되는 펜션을 체험해보세요</div>
+							<div class="mp-slider-lbl-a">늦은 도착시간을 두려워 하지 마세요. 자기만의 비밀번호만 가지고 있다면, 도착 시간이 나의 Check In 시간이 됩니다 !</div>
 							<div class="mp-slider-btn"><a class="btn-a">Here To Stay</a></div>
 						</div>      
       				</div>            
@@ -295,7 +295,7 @@
 								</span>
 							</a>
 							<div class="offer-slider-txt">
-								<div class="offer-slider-link"><a href="#">${room.penName}</a></div>
+								<div class="offer-slider-link"><a href="offer-slider-img" href="/member/pensionDetail.do?id=${room.penId}">${room.penName}</a></div>
 								<div class="offer-slider-l" style="width: 110px;">
 									<div class="offer-slider-location">객실명 : ${room.romName}</div>
 								<div class="offer-slider-link"><a>수용인원 : &nbsp;&nbsp; ${room.romPeople}</a></div>

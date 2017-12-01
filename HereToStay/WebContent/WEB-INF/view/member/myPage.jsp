@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -430,7 +431,7 @@
 										                <p class="small"> 내가 한 문의들을 보여줍니다. </p> <br/>
 												          <div class="padding">
 
-									 <c:forEach var="QnA" items="${QnAList}" varStatus="status">
+									 <c:forEach var="QnA" items="${QnAList}" varStatus="status">							
 												            <c:choose>
 																<c:when test="${(status.count)%3 eq 1}">
 																	<div class="services fly-in">
@@ -505,7 +506,13 @@
 															</c:choose>
 												            
 												            <c:if test="${(status.count)%3 eq 0}">
+												            
 													            	</div>
+																	<div class="clear"></div>
+																</div>
+												            </c:if>
+												            <c:if test="${fn:length(QnAList) eq (status.count)}"> 
+												              	</div>
 																	<div class="clear"></div>
 																</div>
 												            </c:if>

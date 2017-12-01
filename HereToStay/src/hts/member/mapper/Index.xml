@@ -26,8 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- index 화면에 최저가 펜션 검색하기 -->
 <select id="getMinPension" resultType="Room">
-	SELECT pen_name, rom_id, rom_name, rom_cost, rom_people
-	FROM (SELECT pen.pen_name as pen_name, rom.rom_id as rom_id, rom.rom_name as rom_name, rom.rom_cost as rom_cost, rom.rom_people as rom_people, rownum as rnum
+	SELECT pen_name, rom_id, rom_name, rom_cost, rom_people, pen_id
+	FROM (SELECT pen.pen_id as pen_id, pen.pen_name as pen_name, rom.rom_id as rom_id, rom.rom_name as rom_name, rom.rom_cost as rom_cost, rom.rom_people as rom_people, rownum as rnum
 	      FROM pension pen, room rom
 	      WHERE pen.pen_id = rom.pen_id
 	      ORDER BY rom_cost)

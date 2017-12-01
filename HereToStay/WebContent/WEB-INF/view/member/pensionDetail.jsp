@@ -1322,16 +1322,16 @@
 <!-- 				</a> -->
 			</div>
 			
-<!-- 			<div class="h-help"> -->
-<!-- 				<div class="h-help-lbl">Need Sparrow Help?</div> -->
-<!-- 				<div class="h-help-lbl-a">We would be happy to help you!</div> -->
-<!-- 				<div class="h-help-phone">2-800-256-124 23</div> -->
-<!-- 				<div class="h-help-email">sparrow@mail.com</div> -->
-<!-- 			</div> -->
+		<div class="h-help">
+				<div class="h-help-lbl">질문 사항이 있으신가요?</div>
+				<div class="h-help-lbl-a">'여기 없대' 가 도와드릴게요!</div>
+				<div class="h-help-phone">031-548-1577</div>
+				<div class="h-help-email">HereToStay@gmail.com</div>
+			</div>
 			
 <!-- 			<div class="reasons-rating"> -->
 <!-- 				<div id="reasons-slider"> -->
-          <!-- // -->
+<!--           // -->
 <!--   				<div class="reasons-rating-i"> -->
 <!--   					<div class="reasons-rating-txt">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam.</div> -->
 <!--   					<div class="reasons-rating-user"> -->
@@ -1346,8 +1346,8 @@
 <!--   						<div class="clear"></div> -->
 <!--   					</div> -->
 <!--   				</div> -->
-  				<!-- \\ -->
-          <!-- // -->
+<!--   				\\ -->
+<!--           // -->
 <!--   				<div class="reasons-rating-i"> -->
 <!--   					<div class="reasons-rating-txt">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium, totam.</div> -->
 <!--   					<div class="reasons-rating-user"> -->
@@ -1378,7 +1378,7 @@
 <!--   						<div class="clear"></div> -->
 <!--   					</div> -->
 <!--   				</div> -->
-  				<!-- \\ -->
+<!--   				\\ -->
 <!--         </div> -->
 <!-- 			</div> -->
 			
@@ -1491,7 +1491,7 @@
 			</div>
 			
 			<div class="h-reasons">
-				<div class="h-liked-lbl">Reasons to Book with us</div>
+				<div class="h-liked-lbl">좀더 많은 서비스를 받아볼 수 있습니다.</div>
 				<div class="h-reasons-row">
 				<!-- // -->
 					<div class="reasons-i">
@@ -1502,11 +1502,11 @@
 						<div class="reasons-r">
   						<div class="reasons-rb">
 							<div class="reasons-p">
-								<div class="reasons-i-lbl">무인 숙박</div>
-								<p>저희 펜션은 무인으로 운영이 되기때문에 주인과 마주칠일이없습니다.</p>
+								<div class="reasons-i-lbl">마일리지 제공</div>
+								<p>'여기없대'로 예약하고 펜션을 이용하셨다면 리뷰를 작성해보세요! 리뷰를 작성한 고객 100%에게 마일리지를 제공해드립니다.</p>
 							</div>
   						</div>
-  						<br class="clear" />
+  						<br class="clear">
 						</div>
 					</div>
 					<div class="clear"></div>
@@ -1521,11 +1521,11 @@
 						<div class="reasons-r">
   						<div class="reasons-rb">
 							<div class="reasons-p">
-								<div class="reasons-i-lbl">사용 시설</div>
-								<p>저희는 재고를 자동으로 관리하기 때문에 물품이 없어 어려운 일은 없을 것 입니다.</p>
+								<div class="reasons-i-lbl">편리한 펜션 검색기능 제공</div>
+								<p>각 펜션별로 옵션을 나눠났기 때문에 고객이 원하는 타입 별로 펜션을 검색할 수 있습니다. 지금 빠르고 손쉽게 펜션검색을 해보세요!</p>
 							</div>
   						</div>
-  						<br class="clear" />
+  						<br class="clear">
 						</div>
 					</div>
 					<div class="clear"></div>
@@ -1540,11 +1540,11 @@
 						<div class="reasons-r">
   						<div class="reasons-rb">
 							<div class="reasons-p">
-								<div class="reasons-i-lbl">sustomer support</div>
-								<p>Voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequunt.</p>
+								<div class="reasons-i-lbl">전국적인 펜션 제공</div>
+								<p>대한민국 어떤 곳이든 많은 펜션이 '여기없대'에 등록되어 있습니다. '여기없대'를 통해서 국내 여행에 한걸음 더 다가가세요!</p>
 							</div>
   						</div>
-  						<br class="clear" />
+  						<br class="clear">
 						</div>
 					</div>
 					<div class="clear"></div>
@@ -1552,7 +1552,6 @@
 				<!-- \\ -->				
 				</div>
 			</div>
-			
 			
 		</div>
 		<div class="clear"></div>

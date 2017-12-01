@@ -14,8 +14,8 @@ from
 </foreach></if><if test="persons!=null"> and r.rom_people >=#{persons}</if>
 <if test="priceFrom!=null and priceTo!=null">and r.rom_cost between #{priceFrom} and #{priceTo} </if>
 <if test="roomOpt!=null"><foreach item="item" index="index" collection="roomOpt"> AND r.rom_opt LIKE '%' || #{item} || '%'</foreach></if>
- <if test ="checkIn!=null and checkOut!=null"> and r.rom_id not in (select rom_id from reservation <where><if test ="checkIn!=null">TO_DATE(#{checkIn},'YY/MM/DD')  between res_indate and res_outdate</if>
- <if test ="checkOut!=null">or TO_DATE(#{checkOut},'YY/MM/DD')  between res_indate and res_outdate</if> and res_status <![CDATA[ <>]]> '예약완료'</where>)
+ <if test ="checkIn!=null and checkOut!=null"> and r.rom_id not in (select rom_id from reservation <where><if test ="checkIn!=null">TO_DATE(#{checkIn},'YY/MM/DD')<![CDATA[>=]]> res_indate and TO_DATE(#{checkIn},'YY/MM/DD') <![CDATA[<]]> res_outdate</if>
+ <if test ="checkOut!=null">or (TO_DATE(#{checkOut},'YY/MM/DD') <![CDATA[>]]> res_indate and TO_DATE(#{checkOut},'YY/MM/DD') <![CDATA[<=]]> res_outdate)</if> and res_status <![CDATA[ <>]]> '예약완료'</where>)
  </if>
   </where>
  group by p.pen_id

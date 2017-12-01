@@ -80,9 +80,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 5. 회원 별 문의사항 리스트 가져오기 -->
 	<select id="getQnAList" parameterType="String" resultType="QnA">
-		SELECT qna_title, qna_context, TO_CHAR(qna_date, 'YYYY-MM-DD') as qna_date, qna_status, qna_id
-		FROM qna
-		WHERE user_id = #{value}
+		SELECT qna_title, qna_context, qna_date, qna_status, qna_id
+		FROM (SELECT qna_title, qna_context, qna_date, qna_status, qna_id, rownum as rnum
+		      FROM (SELECT qna_title, qna_context, TO_CHAR(qna_date, 'YYYY-MM-DD') as qna_date, qna_status, qna_id
+		            FROM qna
+		            WHERE user_id = #{value}
+		            ORDER BY qna_date DESC))
+		WHERE rnum BETWEEN 1 AND 9
 	</select>
 	
 	
