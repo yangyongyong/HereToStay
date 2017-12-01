@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="index">
+
+<!-- index 화면에 찍혀질 펜션 정보 얻어오기 -->
+<select id="getPopularPension" resultType="pension">
+	SELECT pen_id, avg_star, pen_name, pen_addr2
+	FROM (SELECT pen_id, rownum rnum, avg_star, pen_name, pen_addr2
+	      FROM ( SELECT pen_id, avg_star, pen_name, pen_addr2
+	             FROM (SELECT pen.pen_id as pen_id, count(*) as avg_star, pen.pen_name as pen_name, pen.pen_addr2 as pen_addr2
+	                   FROM reservation res, pension pen, room rm
+	                   WHERE rm.PEN_ID = pen.pen_id AND rm.rom_id = res.rom_id
+	                   GROUP BY pen.pen_id, pen.pen_name, pen.pen_addr2)
+	             ORDER BY avg_star desc ))
+	WHERE rnum between 1 AND 3
+</select>
+
+<!-- index 화면에 찍혀질 펜션 최소금액 얻어오기 -->
+<select id="getMinCost" parameterType="String" resultType="int">
+	SELECT min(rom_cost) as min_cost
+	FROM room rom, pension pen
+	WHERE rom.pen_id = pen.pen_id AND pen.pen_id = #{value}
+</select>
+
+<!-- index 화면에 최저가 펜션 검색하기 -->
+<select id="getMinPension" resultType="Room">
+	SELECT pen_name, rom_id, rom_name, rom_cost, rom_people
+	FROM (SELECT pen.pen_name as pen_name, rom.rom_id as rom_id, rom.rom_name as rom_name, rom.rom_cost as rom_cost, rom.rom_people as rom_people, rownum as rnum
+	      FROM pension pen, room rom
+	      WHERE pen.pen_id = rom.pen_id
+	      ORDER BY rom_cost)
+	WHERE rnum BETWEEN 1 AND 8
+</select>
+
+</mapper>

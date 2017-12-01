@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pensionPageSearch">
+<sql id='search'>
+from
+ (select p.*,ot.*,NVL(rv.cnt,0) as rev_cnt,floor(NVL(rv.avgStar,0)) as avg_star,rownum as rnum
+ from pension p,(
+ select p.pen_id as pen,min(r.rom_Cost) as min_Cost
+ from pension p ,room r
+<where> p.pen_id=r.pen_id<if test="penName!=null"> and (p.pen_name like '%'||#{penName}||'%' or p.pen_addr2 like '%'||#{penName}||'%')</if>
+<if test="penOpt!=null"><foreach item="item" index="index" collection="penOpt"> AND p.pen_opt LIKE '%' || #{item} || '%'
+</foreach></if><if test="persons!=null"> and r.rom_people >=#{persons}</if>
+<if test="priceFrom!=null and priceTo!=null">and r.rom_cost between #{priceFrom} and #{priceTo} </if>
+<if test="roomOpt!=null"><foreach item="item" index="index" collection="roomOpt"> AND r.rom_opt LIKE '%' || #{item} || '%'</foreach></if>
+ <if test ="checkIn!=null and checkOut!=null"> and r.rom_id not in (select rom_id from reservation <where><if test ="checkIn!=null">TO_DATE(#{checkIn},'YY/MM/DD')  between res_indate and res_outdate</if>
+ <if test ="checkOut!=null">or TO_DATE(#{checkOut},'YY/MM/DD')  between res_indate and res_outdate</if> and res_status <![CDATA[ <>]]> '예약완료'</where>)
+ </if>
+  </where>
+ group by p.pen_id
+ )ot left outer join(select p.pen_id as p,count(rv.rev_id) as cnt,avg(rv.rev_star) as avgStar from reservation re,pension p,room r,review rv 
+where p.pen_id=r.pen_id and r.rom_id=re.rom_id and re.res_id =rv.res_id group by p.pen_id)rv
+on ot.pen=rv.p
+ where p.pen_id=ot.pen )f
+</sql>
+<select id="getListOpt" parameterType="hashMap" resultType="pension">
+select f.pen_id,f.pen_name,f.pen_ADDR2,f.pen_Intro,f.pen_star,f.min_cost,f.rev_cnt,f.avg_star
+<include refid='search'></include>
+where f.rnum between #{first} and #{last}
+</select>
+<select id="getTotal" parameterType="hashMap" resultType="integer">
+SELECT count(*)
+<include refid='search'></include>
+</select>
+</mapper>

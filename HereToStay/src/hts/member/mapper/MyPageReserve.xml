@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MyPageReserve">
+
+<!-- 펜션 별 예약 상세보기 -->
+<select id="getReserve" parameterType="hashMap" resultType="reservationDetail">
+	SELECT pen.pen_name as pen_name, pen.pen_addr2 as pen_addr2, rm.rom_name as rom_name,TO_CHAR(rs.res_indate, 'YYYY-MM-DD') as res_indate,
+		   TO_CHAR(rs.res_outdate, 'YYYY-MM-DD') as res_outdate, TO_CHAR(rs.res_tot, '999,999,999') as res_tot, pen.pen_id as pen_id,
+	       rm.rom_people as rom_people, rs.res_status as res_status, pen.pen_intro as pen_intro, pen.pen_noti as pen_noti, rs.res_id as res_id
+	FROM pension pen, room rm, reservation rs
+	WHERE pen.pen_id = rm.pen_id AND rs.rom_id = rm.rom_id AND rs.mem_id = #{memId} AND rs.res_id = #{resId}
+</select>
+
+<!-- 예약 취소 -->
+<select id="delReserve" parameterType="String">
+	UPDATE reservation
+	SET res_status = '예약취소'
+	WHERE res_id = #{value}
+</select>
+
+</mapper>

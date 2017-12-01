@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="QnADetail">
+
+	<!-- 회원 별 문의사항 상세정보 가져오기 -->
+	<select id="getQnA" parameterType="hashMap" resultType="myQnADetail">
+		SELECT TO_CHAR(qna.qna_date, 'YYYY-MM-DD') as qna_date, qna.user_id as user_id, qna.qna_title as qna_title, qna.qna_status as qna_status,
+       		   qna.qna_type as qna_type, qna.qna_context as qna_context, mgr.mgr_id as mgr_id, qna.qna_reply as qna_reply, mgr.mgr_name as mgr_name
+		FROM qna, manager mgr
+		WHERE mgr.mgr_id = qna.mgr_id AND qna.user_id = #{memId} AND qna.qna_id = #{qnaId}
+	</select>
+	
+	<!-- 문의사항 입력하기 -->
+	<select id="qnaInsert" parameterType="QnA">
+		INSERT INTO qna
+		VALUES ('qna'||seq_qna_id.nextval, #{qnaTitle}, #{qnaType}, #{qnaContext}, 'N', '', SYSDATE, #{mgrId}, #{userId})
+	</select>
+
+</mapper>

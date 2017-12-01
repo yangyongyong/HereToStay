@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="getAboutUs">
+
+<!-- about us에 나타낼 회원, 펜션, 리뷰, 예약 개수 얻오기 -->
+<select id="getAboutUsData" resultType="aboutUsData">
+	SELECT
+	    (SELECT COUNT(*) FROM member) member_count,
+	    (SELECT COUNT(*) FROM pension) pension_count,
+	    (SELECT COUNT(*) FROM reservation) reserve_count,
+	    (SELECT COUNT(*) FROM review) review_count
+	FROM DUAL
+</select>
+
+</mapper>

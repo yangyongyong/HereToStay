@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+ <settings>
+  <!-- 자동으로 카멜케이스 규칙으로 변환 -->
+    <setting name="mapUnderscoreToCamelCase" value="true"/>
+ </settings>
+    <typeAliases>
+      <typeAlias type="hts.model.vo.member.Member" alias="member" />
+      <typeAlias type="hts.model.vo.member.Pension" alias="pension" />
+      <typeAlias type="hts.model.vo.member.Room" alias="Room" />
+      <typeAlias type="hts.model.vo.member.Reservation" alias="reservation" />
+      <typeAlias type="hts.model.vo.member.Review" alias="review" />
+      <typeAlias type="hts.model.vo.member.QnA" alias="QnA" />
+      <typeAlias type="hts.model.vo.member.ReservationDetail" alias="reservationDetail" />
+      <typeAlias type="hts.model.vo.member.MyQnADetail" alias="myQnADetail" />
+      <typeAlias type="hts.model.vo.member.AboutUsData" alias="aboutUsData" />
+  </typeAliases>
+</configuration>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pensionPageDetail">
+
+<select id="getPension" resultType="Pension">
+select ot.*,nvl(rv.revCnt,0) as rev_Cnt, nvl(rv.avgStar,0) as avg_Star
+from (select a.* from pension a where a.pen_id= #{penId})ot left outer join
+(select p.pen_id as p,count(rv.rev_id) as revCnt,floor(avg(rv.rev_star)) as avgStar from reservation re,pension p,room r,review rv 
+where p.pen_id=r.pen_id and r.rom_id=re.rom_id and re.res_id =rv.res_id group by p.pen_id)rv
+on ot.pen_id=rv.p
+</select>
+<select id="getRooms" parameterType="hashMap" resultType="Room">
+select * from room where pen_id=#{penId}
+<if test ="checkIn!=null or checkOut!=null"> and rom_id not in (select rom_id from reservation <where>
+<if test ="checkIn!=null"> TO_DATE(#{checkIn},'YY/MM/DD') between res_indate and res_outdate</if>
+<if test ="checkOut!=null"> or TO_DATE(#{checkOut},'YY/MM/DD') between res_indate and res_outdate</if></where>)</if>
+<if test ="persons!=null">and rom_people>= #{persons}</if>
+order by rom_cost 
+</select>
+<select id="getReviews" resultType="Review">
+select r.rom_name,rv.*,m.mem_id from reservation re,pension p,room r,review rv,member m 
+where p.pen_id=r.pen_id and r.rom_id=re.rom_id and re.res_id =rv.res_id and m.mem_id=re.mem_id and p.pen_id=#{penId}
+</select>
+</mapper>

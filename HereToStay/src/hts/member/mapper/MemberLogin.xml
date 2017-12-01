@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberLogin">
+
+<!-- 회원 아이디, 비밀번호 유무 확인하기 -->
+<select id="memCheck" parameterType="HashMap" resultType="int">
+	SELECT count(*)
+	FROM member
+	WHERE mem_id = #{memId} AND mem_pwd = #{memPwd}
+</select>
+
+</mapper>

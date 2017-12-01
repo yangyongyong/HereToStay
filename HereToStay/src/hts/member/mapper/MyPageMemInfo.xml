@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="myPageMemInfo">
+
+	<!-- 1. 회원 정보 가져오기 -->
+	<select id="getMember" parameterType="String" resultType="member">
+		SELECT * FROM member WHERE mem_id = #{value}
+	</select>
+	
+	<!-- 2. 회원 정보 수정하기 -->
+	<update id="infoUpdate" parameterType="member">
+		UPDATE member
+		SET mem_id = #{memId}, mem_name = #{memName}, mem_pwd = #{memPwd}, mem_tel = #{memTel}, mem_mail = #{memMail}, mem_birth = #{memBirth}, mem_rpwd = #{memRpwd}, mem_mig = #{memMig}
+		WHERE mem_id = #{memId}
+	</update>
+	
+	<!-- 3. 회원 별 예약 리스트 가져오기 -->
+	<select id="getReserList" parameterType="HashMap" resultType="reservation">
+		<choose>
+			<when test="(sort1 eq '1'.toString()) and (sort2 eq '1'.toString())">
+				<![CDATA[
+					SELECT *
+					FROM ( SELECT rownum as rnum, pen.pen_name as pen_name, pen.pen_intro as pen_intro, TO_CHAR(rs.res_indate, 'YYYY-MM-DD') as res_indate,
+					              rs.res_id as res_id, TO_CHAR(rs.res_outdate, 'YYYY-MM-DD') as res_outdate, TO_CHAR(rs.res_tot,'999,999,999') as res_tot
+					       FROM pension pen, reservation rs, room rm
+					       WHERE mem_id = #{id} AND pen.pen_id = rm.pen_id AND rm.rom_id = rs.rom_id AND (rs.res_status = '예약완료' OR rs.res_status = '사용완료'))
+					WHERE rnum >=#{first} AND rnum <= #{last}
+					ORDER BY pen_name, res_outdate desc
+				]]> 
+			</when>
+			
+			<when test="(sort1 eq '1'.toString()) and (sort2 eq '2'.toString())">
+				<![CDATA[
+					SELECT *
+					FROM ( SELECT rownum as rnum, pen.pen_name as pen_name, pen.pen_intro as pen_intro, TO_CHAR(rs.res_indate, 'YYYY-MM-DD') as res_indate,
+					              rs.res_id as res_id, TO_CHAR(rs.res_outdate, 'YYYY-MM-DD') as res_outdate, TO_CHAR(rs.res_tot,'999,999,999') as res_tot
+					       FROM pension pen, reservation rs, room rm
+					       WHERE mem_id = #{id} AND pen.pen_id = rm.pen_id AND rm.rom_id = rs.rom_id AND (rs.res_status = '예약완료' OR rs.res_status = '사용완료'))
+					WHERE rnum >=#{first} AND rnum <= #{last}
+					ORDER BY pen_name, res_outdate
+				]]> 
+			</when>
+			
+			<when test="(sort1 eq '2'.toString()) and (sort2 eq '1'.toString())">
+				<![CDATA[
+					SELECT *
+					FROM ( SELECT rownum as rnum, pen.pen_name as pen_name, pen.pen_intro as pen_intro, TO_CHAR(rs.res_indate, 'YYYY-MM-DD') as res_indate,
+					              rs.res_id as res_id, TO_CHAR(rs.res_outdate, 'YYYY-MM-DD') as res_outdate, TO_CHAR(rs.res_tot,'999,999,999') as res_tot
+					       FROM pension pen, reservation rs, room rm
+					       WHERE mem_id = #{id} AND pen.pen_id = rm.pen_id AND rm.rom_id = rs.rom_id AND (rs.res_status = '예약완료' OR rs.res_status = '사용완료'))
+					WHERE rnum >=#{first} AND rnum <= #{last}
+					ORDER BY pen_name desc, res_outdate desc
+				]]> 
+			</when>
+			
+			<when test="(sort1 eq '2'.toString()) and (sort2 eq '2'.toString())">
+				<![CDATA[
+					SELECT *
+					FROM ( SELECT rownum as rnum, pen.pen_name as pen_name, pen.pen_intro as pen_intro, TO_CHAR(rs.res_indate, 'YYYY-MM-DD') as res_indate,
+					              rs.res_id as res_id, TO_CHAR(rs.res_outdate, 'YYYY-MM-DD') as res_outdate, TO_CHAR(rs.res_tot,'999,999,999') as res_tot
+					       FROM pension pen, reservation rs, room rm
+					       WHERE mem_id = #{id} AND pen.pen_id = rm.pen_id AND rm.rom_id = rs.rom_id AND (rs.res_status = '예약완료' OR rs.res_status = '사용완료'))
+					WHERE rnum >=#{first} AND rnum <= #{last}
+					ORDER BY pen_name desc, res_outdate
+				]]> 
+			</when>
+			
+		</choose>
+	</select>
+	
+	<!-- 4. 회원 별 리뷰 리스트 가져오기 -->
+	<select id="getReviewList" parameterType="String" resultType="review">
+		SELECT rev_title, pen_name, rev_star, rom_name, pen.pen_id as pen_id
+		FROM review rv, pension pen, room rm, reservation rs
+		WHERE pen.pen_id = rm.pen_id AND rs.rom_id = rm.rom_id AND rv.res_id = rs.res_id AND rs.mem_id = #{value}
+	</select>
+	
+	<!-- 5. 회원 별 문의사항 리스트 가져오기 -->
+	<select id="getQnAList" parameterType="String" resultType="QnA">
+		SELECT qna_title, qna_context, TO_CHAR(qna_date, 'YYYY-MM-DD') as qna_date, qna_status, qna_id
+		FROM qna
+		WHERE user_id = #{value}
+	</select>
+	
+	
+	<!-- 6. 예약 리스트 총 개수 구하기 -->
+	<select id="getListCount" parameterType="String" resultType="int">
+		SELECT count(*) cnt
+		FROM ( SELECT rownum as rnum, pen.pen_name as pen_name, pen.pen_intro as pen_intro, TO_CHAR(rs.res_indate, 'YYYY-MM-DD') as res_indate,
+		              rs.res_id as res_id, TO_CHAR(rs.res_outdate, 'YYYY-MM-DD') as res_outdate, TO_CHAR(rs.res_tot,'999,999,999') as res_tot
+		       FROM pension pen, reservation rs, room rm
+		       WHERE mem_id = #{value} AND pen.pen_id = rm.pen_id AND rm.rom_id = rs.rom_id AND (rs.res_status = '예약완료' OR rs.res_status = '사용완료'))
+	</select>
+	
+</mapper>
